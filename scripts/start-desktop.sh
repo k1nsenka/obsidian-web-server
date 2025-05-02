@@ -1,15 +1,21 @@
 #!/usr/bin/env bash
-# TigerVNC + Openbox + Obsidian を起動
 set -euo pipefail
 export DISPLAY=:0
 
-# ログディレクトリの準備
-LOGDIR="$HOME/.local/share/obsidian-vnc"
-mkdir -p "$LOGDIR"
+# VNCパスワード設定
+/usr/local/bin/vnc-setup.sh
 
-# VNC起動
+# 解像度の環境変数
+RESOLUTION="${RESOLUTION:-1920x1080}"
+
+# VNC起動（パスワード認証付き）
 echo "[VNC] Xvnc 起動"
-/usr/bin/Xvnc :0 -geometry 1920x1080 -SecurityTypes None -ac -depth 24 &
+if [ -f /home/abc/.vnc/passwd ]; then
+    /usr/bin/Xvnc :0 -geometry "${RESOLUTION}" -PasswordFile /home/abc/.vnc/passwd -ac -depth 24 -SecurityTypes VncAuth &
+else
+    /usr/bin/Xvnc :0 -geometry "${RESOLUTION}" -SecurityTypes None -ac -depth 24 &
+fi
+
 sleep 2
 
 # Openbox起動
@@ -20,7 +26,7 @@ sleep 1
 
 # Obsidianを起動
 echo "[Obsidian] 起動"
-obsidian &
+APPIMAGE_EXTRACT_AND_RUN=1 /opt/Obsidian.AppImage --no-sandbox &
 
 # タスクが終了するまで待機
 wait

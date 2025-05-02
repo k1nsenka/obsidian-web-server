@@ -24,7 +24,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --no-install-recommends locales tzdata xfonts-base && \
     locale-gen ja_JP.UTF-8 && \
     apt-get install -y --no-install-recommends \
-        tigervnc-standalone-server tigervnc-common xauth \
+        tigervnc-standalone-server tigervnc-common tigervnc-tools xauth \
         openbox tint2 xterm xfce4-terminal \
         supervisor curl ca-certificates git \
         python3 python3-websockify unzip \
@@ -73,6 +73,9 @@ RUN mkdir -p /var/run /var/log /tmp /vaults /config /home/abc/.local/share/obsid
     chown -R abc:${PGID} /var/run /var/log /tmp /home/abc
 
 # ---- 7. スクリプトコピー（READMEの構造に合わせて修正）----
+COPY scripts/vnc-setup.sh /usr/local/bin/vnc-setup.sh
+COPY scripts/novnc-auth.sh /usr/local/bin/novnc-auth.sh
+RUN chmod +x /usr/local/bin/vnc-setup.sh /usr/local/bin/novnc-auth.sh
 COPY scripts/start-desktop.sh /usr/local/bin/start-desktop.sh
 COPY supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN chmod +x /usr/local/bin/start-desktop.sh && \
