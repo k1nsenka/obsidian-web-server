@@ -1,0 +1,32 @@
+services:
+  obsidian:
+    build: .
+    container_name: obsidian-web-server
+    restart: unless-stopped
+
+    environment:
+      - TZ=Asia/Tokyo
+      - PUID=501
+      - PGID=20
+      - DOCKER_MODS=linuxserver/mods:universal-git
+      - CUSTOM_USER=obsidian
+      - PASSWORD=${OBS_PASSWORD:-changeme}
+      - DISPLAY=:0
+      - APPIMAGE_EXTRACT_AND_RUN=1
+      - DEBUG=1
+
+    volumes:
+      - ./vaults:/vaults
+      - ./config:/config
+      - ~/.ssh:/home/abc/.ssh:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix
+
+    ports:
+      - "5555:8080"   # HTTP (noVNC)
+      - "5050:8443"   # HTTPS (自己署名)
+      - "5900:5900"   # VNC直接接続用（デバッグ）
+
+
+
+    # デバッグ用に一時的に追加
+    # command: ["/bin/bash", "-c", "sleep infinity"]
