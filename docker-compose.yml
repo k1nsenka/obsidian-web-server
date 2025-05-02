@@ -18,7 +18,6 @@ services:
   
     volumes:
       - ./vaults:/vaults
-      - ./config:/config
       - ~/.ssh:/home/abc/.ssh:ro
       - /tmp/.X11-unix:/tmp/.X11-unix
 

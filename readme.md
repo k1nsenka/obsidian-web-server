@@ -4,7 +4,6 @@
 
 > [!NOTE]
 > 開発予定：画面の解像度に合わせたウィンドウ設定\
-> 開発予定：VNCログイン項目
 
 
 # obsidian-web-server
@@ -68,8 +67,7 @@ obsidian-web-server/
 │   └── start-desktop.sh       # VNC + Obsidian 起動スクリプト
 ├── supervisor/
 │   └── supervisord.conf       # プロセスマネージャ設定
-├── vaults/                    # Markdown Vault（ボリュームマウント）
-└── config/                    # Obsidian 設定（ボリュームマウント）
+└── vaults/                    # Markdown Vault（ボリュームマウント）
 ```
 
 ## カスタマイズ
