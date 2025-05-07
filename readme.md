@@ -3,7 +3,10 @@
 > ### This project is under development. It works to some extent, but the experience is not smooth.
 
 > [!NOTE]
-> 開発予定：画面の解像度に合わせたウィンドウ設定\
+> ~~開発予定：画面の解像度に合わせたウィンドウ設定~~\
+> **実装完了：動的解像度対応（マルチデバイス最適化）**\
+> ~~開発予定：VNCログイン項目~~\
+> **実装完了：VNCログイン機能**
 
 
 # obsidian-web-server

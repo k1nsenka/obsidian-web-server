@@ -31,7 +31,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
         fonts-noto-cjk libgtk-3-0 libnss3 libxss1 libasound2 \
         sudo at-spi2-core libgbm1 \
         x11-apps x11-utils x11-xserver-utils \
-        zlib1g libfuse2 zlib1g-dev && \  
+        zlib1g libfuse2 zlib1g-dev \
+        xdotool x11-xserver-utils xvfb wmctrl && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # ---- 3. noVNC ----
@@ -64,7 +65,7 @@ RUN echo '#!/bin/bash\nexport DISPLAY=:0\nexport APPIMAGE_EXTRACT_AND_RUN=1\nexe
         chmod 0440 /etc/sudoers.d/abc
     
     # ディレクトリの作成と権限設定
-    RUN mkdir -p /vaults /config /home/abc/.config/obsidian && \
+    RUN mkdir -p /vaults /config /home/abc/.config/obsidian /home/abc/.config/openbox && \
         chown -R abc:${PGID} /vaults /config /home/abc
 
 # ---- 6. ディレクトリ準備 ----
@@ -75,7 +76,8 @@ RUN mkdir -p /var/run /var/log /tmp /vaults /config /home/abc/.local/share/obsid
 # ---- 7. スクリプトコピー（READMEの構造に合わせて修正）----
 COPY scripts/vnc-setup.sh /usr/local/bin/vnc-setup.sh
 COPY scripts/novnc-auth.sh /usr/local/bin/novnc-auth.sh
-RUN chmod +x /usr/local/bin/vnc-setup.sh /usr/local/bin/novnc-auth.sh
+COPY scripts/resize-desktop.sh /usr/local/bin/resize-desktop.sh
+RUN chmod +x /usr/local/bin/vnc-setup.sh /usr/local/bin/novnc-auth.sh /usr/local/bin/resize-desktop.sh
 COPY scripts/start-desktop.sh /usr/local/bin/start-desktop.sh
 COPY supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN chmod +x /usr/local/bin/start-desktop.sh && \

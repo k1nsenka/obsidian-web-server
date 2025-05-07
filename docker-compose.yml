@@ -14,7 +14,6 @@ services:
       - DISPLAY=:0
       - APPIMAGE_EXTRACT_AND_RUN=1
       - DEBUG=1
-      - RESOLUTION=1920x1080
   
     volumes:
       - ./vaults:/vaults
